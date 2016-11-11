@@ -8,6 +8,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.twilio.Twilio;
+import com.twilio.rest.api.v2010.account.Message;
+import com.twilio.type.PhoneNumber;
+
 /**
  * Servlet implementation class OneTimePassword
  */
@@ -40,14 +44,20 @@ public class OneTimePassword extends HttpServlet {
     	String otp = "1234";
     	
     	// Send an sms to the phone number provided
+    	public static final String ACCOUNT_SID = "AC8554f7c6b06d1279cb1d50e2bc29c832";
+    	public static final String AUTH_TOKEN = "7a5a9ed173757e3258098d97e11f331f";
     	
+    	Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
+    	Message message = Message.creator(new PhoneNumber("+16305998910"), new PhoneNumber(phoneNumber), otp).create();
+    	String sid = message.getSid();
+    	System.out.println("**** XXXX **** sid returned is : " + sid);
     	
         // Store the sent otp in user session
         
 
         
         response.setContentType("text/html");
-        response.getWriter().print("Sent");
+        response.getWriter().print("Sent, sid="+sid);
         
     }
 
