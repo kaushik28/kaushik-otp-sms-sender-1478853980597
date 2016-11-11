@@ -47,7 +47,7 @@ public class OneTimePassword extends HttpServlet {
     	
     	// Send an sms to the phone number provided
     	Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
-    	Message message = Message.creator(new PhoneNumber("+16305998910"), new PhoneNumber(phoneNumber), otp).create();
+    	Message message = Message.creator(new PhoneNumber(phoneNumber), new PhoneNumber("+16305998910"), otp).create();
     	String sid = message.getSid();
     	System.out.println("**** XXXX **** sid returned is : " + sid);
     	
