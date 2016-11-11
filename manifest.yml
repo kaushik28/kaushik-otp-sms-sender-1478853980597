@@ -1,0 +1,10 @@
+applications:
+- path: target/JavaHelloWorldApp.war
+  memory: 512M
+  instances: 1
+  domain: mybluemix.net
+  name: kaushik-otp-sms-sender
+  host: kaushik-otp-sms-sender
+  disk_quota: 1024M
+  services:
+  - Twilio-wm
