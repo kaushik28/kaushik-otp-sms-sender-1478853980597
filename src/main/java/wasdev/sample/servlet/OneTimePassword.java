@@ -18,7 +18,9 @@ import com.twilio.type.PhoneNumber;
 @WebServlet("/OneTimePassword")
 public class OneTimePassword extends HttpServlet {
     private static final long serialVersionUID = 1L;
-
+    public static final String ACCOUNT_SID = "AC8554f7c6b06d1279cb1d50e2bc29c832";
+    public static final String AUTH_TOKEN = "7a5a9ed173757e3258098d97e11f331f";
+    	
     /**
      * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
      */
@@ -44,9 +46,6 @@ public class OneTimePassword extends HttpServlet {
     	String otp = "1234";
     	
     	// Send an sms to the phone number provided
-    	public static final String ACCOUNT_SID = "AC8554f7c6b06d1279cb1d50e2bc29c832";
-    	public static final String AUTH_TOKEN = "7a5a9ed173757e3258098d97e11f331f";
-    	
     	Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
     	Message message = Message.creator(new PhoneNumber("+16305998910"), new PhoneNumber(phoneNumber), otp).create();
     	String sid = message.getSid();
