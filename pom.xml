@@ -25,6 +25,12 @@
         </license>
     </licenses>
 
+    <!– In Project repository –>
+    <repository>
+        <id>in-project</id>
+        <name>In Project Repo</name>
+        <url>file://${project.basedir}/lib</url>
+    </repository>
 
     <dependencyManagement>
         <dependencies>
@@ -43,11 +49,9 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>com.twilio.sdk</groupId>
-            <artifactId>twilio</artifactId>
-            <version>0.9.2</version>
-            <scope>system</scope>
-            <systemPath>${project.basedir}/lib/twilio-java-sdk-3.4.2-jar-with-dependencies.jar</systemPath>
+            <groupId>twilio</groupId>
+            <artifactId>twilio-java-sdk</artifactId>
+            <version>3.4.2</version>
         </dependency>
     </dependencies>
 
