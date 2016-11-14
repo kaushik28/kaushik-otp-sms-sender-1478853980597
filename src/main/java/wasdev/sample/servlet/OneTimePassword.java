@@ -1,6 +1,7 @@
 package wasdev.sample.servlet;
 
 import java.io.IOException;
+import java.lang.Math;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -34,14 +35,18 @@ public class OneTimePassword extends HttpServlet {
     private static final long serialVersionUID = 1L;
     public static final String ACCOUNT_SID = "AC8554f7c6b06d1279cb1d50e2bc29c832";
     public static final String AUTH_TOKEN = "7a5a9ed173757e3258098d97e11f331f";
+    public static Map<String, String> ONE_TIME_PASSWORDS = new HashMap<String, String>();
     	
     /**
      * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    	// Get the sent OTP from user session
-    	String otp = "1234";
+    	
+    	String phoneNumber = request.getParameter("phone");
+    	
+    	// Get the sent OTP from map
+    	String otp = ONE_TIME_PASSWORDS.get(phoneNumber);
     	
     	// Send the OTP as response for validation
         response.setContentType("text/html");
@@ -58,18 +63,17 @@ public class OneTimePassword extends HttpServlet {
     	System.out.println("**** XXXX **** The phone number provided is : " + phoneNumber);
     	
     	// Generate a random 4 digit numberic OTP
-    	String otp = "1234";
+    	int randomPIN = (int)(Math.random()*9000)+1000;
+    	String otp = String.valueOf(randomPIN);
     	
     	// Send an sms to the phone number provided
     	TwilioRestClient client = new TwilioRestClient(ACCOUNT_SID, AUTH_TOKEN);
-    	
-	    // Build a filter for the SmsList
 		Map<String, String> params = new HashMap<String, String>();
 		
 		// Update with your Twilio number 
 		params.put("From", "+16305998910");
-		params.put("Body", "1234");
-		params.put("To", "+919886034438");
+		params.put("Body", "For loging into OpenBanking your One Time Password (OTP) is: 1234");
+		params.put("To", phoneNumber);
     	
 		SmsFactory messageFactory = client.getAccount().getSmsFactory();
 		try {
@@ -79,18 +83,11 @@ public class OneTimePassword extends HttpServlet {
 			throw new ServletException(e);
 		}
     	
-/*
-    	Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
-    	Message message = Message.creator(new PhoneNumber("+919886034438"), new PhoneNumber("+16305998910"), otp).create();
-*/
-
     	String sid = message.getSid();
     	System.out.println("**** XXXX **** sid returned is : " + sid);
 
-
-        // Store the sent otp in user session
-        
-
+        // Store the sent otp in map
+        ONE_TIME_PASSWORDS.put(phoneNumber, otp);
         
         response.setContentType("text/html");
         response.getWriter().print("Sent, sid="+sid);
