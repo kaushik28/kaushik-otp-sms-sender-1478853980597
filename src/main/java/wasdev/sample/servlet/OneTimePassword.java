@@ -53,6 +53,7 @@ public class OneTimePassword extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    	Sms message = null;
     	String phoneNumber = request.getParameter("phone");
     	System.out.println("**** XXXX **** The phone number provided is : " + phoneNumber);
     	
