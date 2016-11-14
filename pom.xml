@@ -42,11 +42,6 @@
             <artifactId>geronimo-servlet_3.0_spec</artifactId>
             <scope>provided</scope>
         </dependency>
-        <dependency>
-            <groupId>com.twilio.sdk</groupId>
-            <artifactId>twilio</artifactId>
-            <version>(7.0,7.9)</version>
-        </dependency>
     </dependencies>
 
     <build>
