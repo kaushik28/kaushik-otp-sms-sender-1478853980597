@@ -1,6 +1,7 @@
 package wasdev.sample.servlet;
 
 import java.io.IOException;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -59,19 +60,27 @@ public class OneTimePassword extends HttpServlet {
     	
     	// Send an sms to the phone number provided
     	TwilioRestClient client = new TwilioRestClient(ACCOUNT_SID, AUTH_TOKEN);
-/*    	
-    	List<NameValuePair> params = new ArrayList<NameValuePair>();
-    	params.add(new BasicNameValuePair("To", "+919886034438"));
-    	params.add(new BasicNameValuePair("From", "+16305998910"));
-    	params.add(new BasicNameValuePair("Body", otp));
     	
-    	MessageFactory messageFactory = client.getAccount().getMessageFactory();
-    	Message message = messageFactory.create(params);
-*/    	
-
+	    // Build a filter for the SmsList
+		Map<String, String> params = new HashMap<String, String>();
+		
+		// Update with your Twilio number 
+		params.put("From", "+16305998910");
+		params.put("Body", "1234");
+		params.put("To", "+919886034438");
+    	
+		SmsFactory messageFactory = client.getAccount().getSmsFactory();
+		try {
+		message = messageFactory.create(params);
+		}
+		catch (TwilioRestException e) {
+			throw new ServletException(e);
+		}
+    	
+/*
     	Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
     	Message message = Message.creator(new PhoneNumber("+919886034438"), new PhoneNumber("+16305998910"), otp).create();
-
+*/
 
     	String sid = message.getSid();
     	System.out.println("**** XXXX **** sid returned is : " + sid);
