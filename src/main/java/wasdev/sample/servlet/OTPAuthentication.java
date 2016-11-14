@@ -30,8 +30,8 @@ import com.twilio.sdk.resource.list.*;
 /**
  * Servlet implementation class OneTimePassword
  */
-@WebServlet("/OneTimePassword")
-public class OneTimePassword extends HttpServlet {
+@WebServlet("/OTPAuthentication")
+public class OTPAuthentication extends HttpServlet {
     private static final long serialVersionUID = 1L;
     public static final String ACCOUNT_SID = "AC8554f7c6b06d1279cb1d50e2bc29c832";
     public static final String AUTH_TOKEN = "7a5a9ed173757e3258098d97e11f331f";
@@ -43,14 +43,22 @@ public class OneTimePassword extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	
-    	String phoneNumber = request.getParameter("phone");
+        String phoneNumber = request.getParameter("phone");
+        String otpKey = request.getParameter("key");
     	
     	// Get the sent OTP from map
-    	String otp = ONE_TIME_PASSWORDS.get(phoneNumber);
+        String otp = ONE_TIME_PASSWORDS.get(phoneNumber);
+        if(otp.equals(otpKey)){
+        	response.setStatus(200);
+            response.setContentType("text/html");
+            response.getWriter().print("Authentication Succeeded");
+        } else {
+        	response.setStatus(401);
+            response.setContentType("text/html");
+            response.getWriter().print("Authentication Failed");
+        }
     	
     	// Send the OTP as response for validation
-        response.setContentType("text/html");
-        response.getWriter().print(otp);
     }
 
     /**
