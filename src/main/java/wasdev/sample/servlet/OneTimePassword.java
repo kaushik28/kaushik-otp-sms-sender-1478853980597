@@ -12,12 +12,18 @@ import com.twilio.Twilio;
 import com.twilio.rest.api.v2010.account.Message;
 import com.twilio.type.PhoneNumber;
 
+import com.twilio.sdk.TwilioRestClient;
+import com.twilio.sdk.TwilioRestException;
+import com.twilio.sdk.resource.factory.SmsFactory;
+import com.twilio.sdk.resource.instance.Sms;
+
+/*
 import java.util.*;
 import com.twilio.sdk.*;
 import com.twilio.sdk.resource.factory.*;
 import com.twilio.sdk.resource.instance.*;
 import com.twilio.sdk.resource.list.*;
-
+*/
 /**
  * Servlet implementation class OneTimePassword
  */
@@ -53,7 +59,7 @@ public class OneTimePassword extends HttpServlet {
     	
     	// Send an sms to the phone number provided
     	TwilioRestClient client = new TwilioRestClient(ACCOUNT_SID, AUTH_TOKEN);
-    	
+/*    	
     	List<NameValuePair> params = new ArrayList<NameValuePair>();
     	params.add(new BasicNameValuePair("To", "+919886034438"));
     	params.add(new BasicNameValuePair("From", "+16305998910"));
@@ -61,11 +67,11 @@ public class OneTimePassword extends HttpServlet {
     	
     	MessageFactory messageFactory = client.getAccount().getMessageFactory();
     	Message message = messageFactory.create(params);
-    	
-/*    	
-    	Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
-    	Message message = Message.creator(new PhoneNumber(phoneNumber), new PhoneNumber("+16305998910"), otp).create();
 */    	
+
+    	Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
+    	Message message = Message.creator(new PhoneNumber("+919886034438"), new PhoneNumber("+16305998910"), otp).create();
+
 
     	String sid = message.getSid();
     	System.out.println("**** XXXX **** sid returned is : " + sid);
