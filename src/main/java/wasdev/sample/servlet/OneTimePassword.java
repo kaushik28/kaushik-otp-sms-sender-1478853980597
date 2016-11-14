@@ -72,7 +72,7 @@ public class OneTimePassword extends HttpServlet {
 		
 		// Update with your Twilio number 
 		params.put("From", "+16305998910");
-		params.put("Body", "For loging into OpenBanking your One Time Password (OTP) is: 1234");
+		params.put("Body", "For loging into OpenBanking your One Time Password (OTP) is:"+otp);
 		params.put("To", phoneNumber);
     	
 		SmsFactory messageFactory = client.getAccount().getSmsFactory();
